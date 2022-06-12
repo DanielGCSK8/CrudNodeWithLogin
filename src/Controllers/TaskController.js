@@ -1,17 +1,18 @@
 function index(req, res) {
+  let name = req.session.name;
     req.getConnection((err, conn) => {
       conn.query('SELECT * FROM tasks', (err, tasks) => {
         if(err) {
           res.json(err);
         }
-        res.render('tasks/index', { tasks });
+        res.render('tasks/index', { tasks, name });
       });
     });
   }
 
 function create(req, res) {
-
-    res.render('tasks/create')
+  let name = req.session.name;
+    res.render('tasks/create', { name });
 }
 
 function store(req, res) {
@@ -35,13 +36,14 @@ function store(req, res) {
 
   function edit(req, res) {
     const id = req.params.id;
+    let name = req.session.name;
   
     req.getConnection((err, conn) => {
       conn.query('SELECT * FROM tasks WHERE id = ?', [id], (err, tasks) => {
         if(err) {
           res.json(err);
         }
-        res.render('tasks/edit', { tasks });
+        res.render('tasks/edit', { tasks, name });
       });
     });
   }

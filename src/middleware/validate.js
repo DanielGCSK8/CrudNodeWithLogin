@@ -5,3 +5,5 @@ function isAdmin(req, res, next) {
         res.redirect('/login');
     }
   }
+
+  module.exports = isAdmin;

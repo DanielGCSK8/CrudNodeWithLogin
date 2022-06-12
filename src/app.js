@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const session = require('express-session');
 const tasksRoutes = require('./routes/tasks');
 const loginRoutes = require('./routes/login');
-const middleware = require('./middleware/validate.js');
+const middleware = require('./middleware/validate');
 
 const app = express();
 app.set('port', 4000);
@@ -41,20 +41,11 @@ console.log('Listening on port ', app.get('port'));
 });
 
 app.use('/', loginRoutes);
-
-function isAdmin(req, res, next) {
-    if (req.session.loggedin == true) {
-      next();
-    } else {
-        res.redirect('/login');
-    }
-  }
-app.use(isAdmin);
+app.use(middleware);
 
 app.get('/', (req, res) => {
 
 		let name = req.session.name;
-		
  		res.render('home', { name });
 });
 app.use('/', tasksRoutes);
