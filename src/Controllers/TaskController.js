@@ -1,5 +1,3 @@
-const LoginController = require('../Controllers/LoginController');
-
 function index(req, res) {
     req.getConnection((err, conn) => {
       conn.query('SELECT * FROM tasks', (err, tasks) => {
@@ -14,12 +12,10 @@ function index(req, res) {
 function create(req, res) {
 
     res.render('tasks/create')
-
 }
 
 function store(req, res) {
     const data = req.body;
-  
     req.getConnection((err, conn) => {
       conn.query('INSERT INTO tasks SET ?', [data], (err, rows) => {
         res.redirect('/tasks');
